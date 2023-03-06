@@ -13,6 +13,7 @@ class Departemen extends Model
         'nama_departemen',
     ];
 
+    // Relasi Dengan Tabel Pengajuan
     public function pengajuan(){
         $this->hasMany(Pengajuan::class, 'pengajuan_id');
     }

@@ -32,9 +32,6 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col">Name Code</th>
                                         <th class="text-center" scope="col">Nama</th>
-                                        <th class="text-center" scope="col">Jenis Kelamin</th>
-                                        <th class="text-center" scope="col">Alamat Asal</th>
-                                        <th class="text-center" scope="col">Nomor Telepon</th>
                                         <th class="text-center" scope="col">Role</th>
                                         <th class="text-center" scope="col">Aksi</th>
 
@@ -50,9 +47,6 @@
                                             <td class="text-center">{{$no++}}</td>
                                             <td>{{$item->namecode}}</td>
                                             <td class="text-center">{{$item->name}}</td>
-                                            <td class="text-center">{{$item->jenis_kelamin}}</td>
-                                            <td class="text-center text-wrap">{{$item->alamat_asal}}</td>
-                                            <td class="text-center">{{$item->telp}}</td>
                                             @if ($item->role == 'user')
                                                 <td class="bg-primary text-white text-center text-uppercase">{{$item->role}}</td>
                                             @elseif ($item->role == 'manager')

@@ -40,45 +40,6 @@
           </div>
 
           <div class="col-12">
-            <label for="alamat_asal" class="form-label">Alamat Asal</label>
-            <input type="text" name="alamat_asal" class="form-control @error('alamat_asal') is-invalid @enderror" placeholder="Alamat Asal">
-            
-            @error('alamat_asal')
-              <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            
-          </div>
-
-          <div class="col-12">
-            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-
-            @php
-                $jenisKelamin = ['Laki-laki', 'Perempuan'];
-            @endphp
-
-            <select name="jenis_kelamin" class="form-select form-control">
-              @foreach ($jenisKelamin as $jk)
-                <option value="{{$jk}}">{{$jk}}</option>    
-              @endforeach
-            </select>
-
-            @error('jenis_kelamin')
-              <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            
-          </div>
-
-          <div class="col-12">
-            <label for="telp" class="form-label">Nomor Telepon</label>
-            <input type="text" name="telp" class="form-control @error('telp') is-invalid @enderror" placeholder="Nomor Telepon">
-            
-            @error('telp')
-              <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            
-          </div>
-
-          <div class="col-12">
             <label for="password" class="form-label">Password</label>
             <input type="text" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password">
             

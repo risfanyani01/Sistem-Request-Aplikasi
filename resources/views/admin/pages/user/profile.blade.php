@@ -30,11 +30,7 @@
                               <tr>
                                   <th scope="col">Name Code</th>
                                   <th class="text-center" scope="col">Nama</th>
-                                  <th class="text-center" scope="col">Jenis Kelamin</th>
-                                  <th class="text-center" scope="col">Alamat Asal</th>
-                                  <th class="text-center" scope="col">Nomor Telepon</th>
                                   <th class="text-center" scope="col">Role</th>
-                                  {{-- <th class="text-center" scope="col">Aksi</th> --}}
 
                                   </tr>
                               </thead>
@@ -43,9 +39,6 @@
                                   <tr>
                                       <td>{{$data->namecode}}</td>
                                       <td class="text-center">{{$data->name}}</td>
-                                      <td class="text-center">{{$data->jenis_kelamin}}</td>
-                                      <td class="text-center text-wrap">{{$data->alamat_asal}}</td>
-                                      <td class="text-center">{{$data->telp}}</td>
                                       @if ($data->role == 'user')
                                           <td class="bg-primary text-white text-center text-uppercase">{{$data->role}}</td>
                                       @elseif ($data->role == 'manager')

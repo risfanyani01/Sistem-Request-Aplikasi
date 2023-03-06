@@ -8,15 +8,18 @@ use Illuminate\Routing\Controller;
 
 class DepartemenController extends Controller
 {
+    // Menampilkan Data Departemen Dari Database
     public function index(){
         $datas = Departemen::all();
         return view('admin.pages.departemen.index', compact('datas'));
     }
 
+    // Menampilkan Form Tambah Data Departemen
     public function create(){
         return view('admin.pages.departemen.create');
     }
 
+    // Mebambahkan Data Departemen Kedalam Database
     public function store(Request $request){
         $validated = $request->validate([
             'nama_departemen' => 'required',
@@ -31,11 +34,13 @@ class DepartemenController extends Controller
         }
     }
 
+    // Menampilkan Halaman Edit Sesuai Dengan ID
     public function edit($id){
         $data = Departemen::findOrFail($id);
         return view('admin.pages.departemen.edit', compact('data'));
     }
 
+    // Melakukan Perubahan Data Pada Database
     public function update(Request $request, $id){
         $validated = $request->validate([
             'nama_departemen' => 'required',
@@ -51,6 +56,7 @@ class DepartemenController extends Controller
         
     }
 
+    // Menghapus Data
     public function delete($id){
         $data = Departemen::findOrFail($id);
         $data->delete();

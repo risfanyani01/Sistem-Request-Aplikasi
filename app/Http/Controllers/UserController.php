@@ -25,9 +25,6 @@ class UserController extends Controller
         $data = new User();
         $data->namecode = $request->namecode;
         $data->name = $request->name;
-        $data->alamat_asal = $request->alamat_asal;
-        $data->jenis_kelamin = $request->jenis_kelamin;
-        $data->telp = $request->telp;
         $data->password = Hash::make($request->get('password'));
         $data->role = $request->role;
         $data->save();

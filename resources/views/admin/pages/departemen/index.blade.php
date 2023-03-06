@@ -29,6 +29,8 @@
                                     </thead>
                                     <tbody>
                                         
+                                        {{-- Looping Data Untuk Ditampilkan Ke Antar Muka --}}
+
                                         @php
                                             $no = 1; 
                                         @endphp
