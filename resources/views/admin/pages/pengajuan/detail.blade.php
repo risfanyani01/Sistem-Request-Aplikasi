@@ -61,6 +61,13 @@
                           <h2 class="card-title">Pemohon :</h2>
                           <p>&nbsp;{{$data->seksi->nama_seksi}}</p>
                         </div>
+                        
+                        <div class="d-flex"> 
+                          <h2 class="card-title align-self-center">Blue Print Aplikasi : &nbsp;</h2>
+                          <a href="{{asset('storage/gambar/'.$data->gambar)}}" alt="gambar / blueprint" class="btn btn-sm btn-info" style="height:30px;">
+                            Lihat Data
+                          </a>
+                        </div>
                     </div>
                 </div>
 

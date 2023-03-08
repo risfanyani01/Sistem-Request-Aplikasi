@@ -16,8 +16,23 @@
 
     <div class="card">
       <div class="card-body">
-        <form class="row g-3" action="{{route('pengajuan.store')}}" method="POST">
+        <form class="row g-3" action="{{route('pengajuan.store')}}" method="POST" enctype="multipart/form-data">
           @csrf
+          
+          <div class="col-12">
+            <label for="departemen_id" class="form-label"><strong>Departemen</strong></label>
+            <select class="form-select form-control @error('departemen_id') is-invalid @enderror" name="departemen_id">
+              <option disabled selected>Departemen</option>
+              @foreach ($departemen as $item)
+              <option value="{{ $item->id }}">{{ $item->nama_departemen }}</option>
+              @endforeach
+            </select>
+            
+            @error('departemen_id')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+          </div>
+          
           <div class="col-12">
             <label for="seksi_id" class="form-label"><strong>Seksi</strong></label>
             <select class="form-select form-control @error('seksi_id') is-invalid @enderror" name="seksi_id">
@@ -31,21 +46,7 @@
               <div class="alert alert-danger">{{ $message }}</div>
             @enderror
           </div>
-
-          <div class="col-12">
-            <label for="departemen_id" class="form-label"><strong>Departemen</strong></label>
-            <select class="form-select form-control @error('departemen_id') is-invalid @enderror" name="departemen_id">
-                <option disabled selected>Departemen</option>
-                @foreach ($departemen as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama_departemen }}</option>
-                @endforeach
-            </select>
-
-            @error('departemen_id')
-              <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-          </div>
-
+          
           <div class="col-12">
             <label for="kategori_id" class="form-label"><strong>Jenis Permintaan</strong></label>
             <select class="form-select form-control" name="kategori_id">
@@ -74,6 +75,15 @@
             <textarea name="penjelasan" rows="10" class="form-control"></textarea>
             
             @error('penjelasan')
+              <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+          </div>
+
+          <div class="col-12">
+            <label for="gambar" class="form-label"><strong>Blueprint</strong></label>
+            <input type="file" class="form-control" name="gambar">
+            
+            @error('gambar')
               <div class="alert alert-danger">{{ $message }}</div>
             @enderror
           </div>         

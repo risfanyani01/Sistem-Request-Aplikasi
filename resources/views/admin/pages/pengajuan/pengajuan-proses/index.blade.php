@@ -15,7 +15,7 @@
                     <div class="col-md-12">
                         <div class="card border-0 shadow rounded">
                             <div class="card-body py-4">
-                                @if (Auth::user()->role == 'user')
+                                @if (Auth::user()->role == 'user' || 'manager')
                                 <div class="mb-4">
                                     <a class="btn btn-sm btn-primary" href="{{route('pengajuan.index')}}">Kembali</a>
                                 </div>

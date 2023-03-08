@@ -19,7 +19,8 @@ class Pengajuan extends Model
         'nama_aplikasi',
         'penjelasan',
         'keterangan',
-        'tanggal_pengajuan'
+        'tanggal_pengajuan',
+        'gambar'
     ];
 
     public function kategori()

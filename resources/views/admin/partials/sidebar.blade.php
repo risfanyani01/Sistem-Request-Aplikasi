@@ -22,6 +22,14 @@
       </a>
     </li>
     @elseif(Auth::user()->role == 'sit')
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('kategori.index')}}">
+        <span class="menu-title">Jenis Permintaan</span>
+        <i class="mdi mdi-bookmark menu-icon"></i>
+      </a>
+    </li>
+
     <li class="nav-item">
       <a class="nav-link" href="{{route('seksi.index')}}">
         <span class="menu-title">Seksi</span>

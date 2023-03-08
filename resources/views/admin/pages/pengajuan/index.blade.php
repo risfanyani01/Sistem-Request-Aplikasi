@@ -27,10 +27,12 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 @else
                                 <div class="mb-4">
                                     <div>
                                         <a href="{{route('pengajuan.selesai')}}" class="btn btn-sm btn-info" >Selesai</a>
+                                        <a href="{{route('pengajuan.proses')}}" class="btn btn-sm btn-warning" >Diproses</a>
                                     </div>
                                 </div>
                                 @endif

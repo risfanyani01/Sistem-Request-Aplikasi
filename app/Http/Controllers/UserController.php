@@ -6,8 +6,9 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -21,6 +22,16 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
+
+        Validator::make($request->all(), [
+            'namecode' => 'required|unique:users',
+            'name' => 'required',
+            'password' => 'required',
+            'role' => 'required',
+            ], [
+                'namecode.unique' => 'Name Code Sudah Terdaftar',
+                '*.required' => 'Field Harus Di Isi'
+            ])->validate();    
 
         $data = new User();
         $data->namecode = $request->namecode;

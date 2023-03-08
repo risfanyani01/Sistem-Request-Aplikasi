@@ -19,20 +19,35 @@
         <form class="row g-3" action="{{route('pengajuan.update', $data->id)}}" method="POST">
           @csrf
           @method('PUT')
+
+          <div class="col-12">
+            <label for="departemen_id" class="form-label">Departemen</label>
+            <select class="form-select @error('departemen_id') is-invalid @enderror" name="departemen_id" class="form-control">
+                <option selected value="{{$data->departemen_id}}">{{$data->departemen->nama_departemen}}</option>
+                @foreach ($departemen as $item)
+                        <option value="{{ $item->departemen_id }}">{{ $item->nama_departemen }}</option>
+                @endforeach
+            </select>
+
+            @error('departemen_id')
+              <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+          </div>
+
         
-                  <div class="col-12">
-                    <label for="seksi_id" class="form-label">Pemohon</label>
-                    <select class="form-select @error('seksi_id') is-invalid @enderror" name="seksi_id" class="form-control">
-                        <option selected value="{{$data->seksi_id}}">{{$data->seksi->nama_seksi}}</option>
-                        @foreach ($seksi as $item)
-                                <option value="{{ $item->seksi_id }}">{{ $item->nama_seksi }}</option>
-                        @endforeach
-                    </select>
-        
-                    @error('seksi_id')
-                      <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                  </div>
+          <div class="col-12">
+            <label for="seksi_id" class="form-label">Seksi</label>
+            <select class="form-select @error('seksi_id') is-invalid @enderror" name="seksi_id" class="form-control">
+                <option selected value="{{$data->seksi_id}}">{{$data->seksi->nama_seksi}}</option>
+                @foreach ($seksi as $item)
+                        <option value="{{ $item->seksi_id }}">{{ $item->nama_seksi }}</option>
+                @endforeach
+            </select>
+
+            @error('seksi_id')
+              <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+          </div>
 
           <div class="col-12">
             <label for="kategori_id" class="form-label">Jenis Permintaan</label>
@@ -64,7 +79,16 @@
             @error('penjelasan')
               <div class="alert alert-danger">{{ $message }}</div>
             @enderror
-          </div>        
+          </div>
+
+          <div class="col-12">
+            <label for="gambar" class="form-label"><strong>Gambar / Blueprint</strong></label>
+            <input type="file" class="form-control" name="gambar">
+            
+            @error('gambar')
+              <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+          </div> 
           
           <div class="text-left">
             <button type="submit" class="btn btn-md btn-primary">Submit</button>

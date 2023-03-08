@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('nama_aplikasi');
             $table->longText('penjelasan');
             $table->enum('keterangan', ['diterima', 'proses', 'ditolak', 'pending', 'selesai'])->default('pending');
+            $table->string('gambar');
             $table->string('tanggal_pengajuan');
             $table->timestamps();
         });

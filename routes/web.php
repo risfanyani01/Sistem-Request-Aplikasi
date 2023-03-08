@@ -30,12 +30,12 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     
 //Kategori
-Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index')->middleware('can:isUser');
-Route::get('/kategori/tambah', [KategoriController::class, 'create'])->name('kategori.create')->middleware('can:isUser');
-Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store')->middleware('can:isUser');
-Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit')->middleware('can:isUser');
-Route::put('/kategori/update/{id}', [KategoriController::class, 'update'])->name('kategori.update')->middleware('can:isUser');
-Route::delete('/kategori/delete/{id}', [KategoriController::class, 'delete'])->name('kategori.delete')->middleware('can:isUser');
+Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+Route::get('/kategori/tambah', [KategoriController::class, 'create'])->name('kategori.create')->middleware('can:isSit');
+Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store')->middleware('can:isSit');
+Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit')->middleware('can:isSit');
+Route::put('/kategori/update/{id}', [KategoriController::class, 'update'])->name('kategori.update')->middleware('can:isSit');
+Route::delete('/kategori/delete/{id}', [KategoriController::class, 'delete'])->name('kategori.delete')->middleware('can:isSit');
 
 // Edit Password
 Route::get('/editPassword', [PasswordController::class, 'index'])->name('password');
@@ -50,7 +50,7 @@ Route::get('/pengajuan/edit/{id}', [PengajuanController::class, 'edit'])->name('
 Route::put('/pengajuan/update/{id}', [PengajuanController::class, 'update'])->name('pengajuan.update');
 Route::delete('/pengajuan/delete/{id}', [PengajuanController::class, 'delete'])->name('pengajuan.delete');
 Route::get('/pengajuan-disetujui', [PengajuanController::class, 'pengajuan_diterima'])->name('pengajuan.diterima');
-Route::get('/pengajuan-ditolak', [PengajuanController::class, 'pengajuan_ditolak'])->name('pengajuan.ditolak');
+Route::get('/pengajuan-ditolak', [PengajuanController::class, 'pengajuan_ditolak'])->name('pengajuan.ditolak')->middleware('can:isUser');
 Route::get('/pengajuan-selesai', [PengajuanController::class, 'pengajuan_selesai'])->name('pengajuan.selesai');
 Route::get('/pengajuan-proses', [PengajuanController::class, 'pengajuan_proses'])->name('pengajuan.proses');
 
@@ -63,7 +63,9 @@ Route::get('done/{id}', [PengajuanController::class, 'done'])->name('pengajuan.d
 // Logout
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/user/show/{id}', [UserController::class, 'show'])->name('user.show');
 });
+
 
 Route::middleware(['auth', 'can:isSit'])->group(function () {
     //Seksi
@@ -86,7 +88,6 @@ Route::middleware(['auth', 'can:isSit'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/tambah', [UserController::class, 'create'])->name('user.create');
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
-    Route::get('/user/show/{id}', [UserController::class, 'show'])->name('user.show');
     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');

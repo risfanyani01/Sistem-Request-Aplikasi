@@ -16,15 +16,18 @@
                         <div class="card border-0 shadow rounded">
                             <div class="card-body">
                                 <div class="mb-4">
-                                    <a href="{{route('kategori.create')}}" class="btn btn-md btn-primary rounded-1">Tambah Data</a>
+                                    @if (Auth::user()->role == 'sit')
+                                        <a href="{{route('kategori.create')}}" class="btn btn-md btn-primary rounded-1">Tambah Data</a>
+                                    @endif
                                 </div>
                                 <table class="table table-responsive table-bordered table-striped" style="font-size: 14px">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="text-center">No</th>
+                                        <th width="5%" scope="col" class="text-center">No</th>
                                         <th width="80%" scope="col">Jenis Permintaan</th>
-                                        <th class="text-center" scope="col">Aksi</th>
-
+                                        @if (Auth::user()->role == 'sit')
+                                            <th class="text-center" scope="col">Aksi</th>
+                                        @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -36,6 +39,7 @@
                                         <tr>
                                             <td class="text-center">{{$no++}}</td>
                                             <td>{{$data->nama_jenis}}</td>
+                                            @if (Auth::user()->role == 'sit')
                                             <td class="text-center">
                                                 <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{route('kategori.delete',$data->id)}}" method="POST">
                                                     <a href="{{route('kategori.edit',$data->id)}}" class="btn btn-sm btn-success">
@@ -48,6 +52,7 @@
                                                     </button>
                                                 </form>
                                             </td>
+                                            @endif
                                         </tr>
                                         @empty
                                         <tr>

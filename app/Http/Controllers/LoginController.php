@@ -30,7 +30,7 @@ class LoginController extends Controller
     }
 
     public function proseslogin(Request $request)
-    {
+    {  
         $data = [
             'namecode' => $request->input('namecode'),
             'password' => $request->input('password'),

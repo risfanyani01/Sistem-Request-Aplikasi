@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class PengajuanController extends Controller
@@ -27,6 +29,24 @@ class PengajuanController extends Controller
     }
 
     public function store(Request $request){ 
+             
+        Validator::make($request->all(), [
+        'kategori_id' => 'required',
+        'nama_aplikasi' => 'required',
+        'penjelasan' => 'required',
+        'seksi_id' => 'required',
+        'departemen_id' => 'required',
+        'gambar' => 'required',
+        'gambar' => 'mimes:pdf|max:5000',
+        ], [
+            'gambar.max' => 'Ukuran File Maksimal 5 MB',
+            'gambar.mimes' => 'Tipe File Harus Pdf',
+            '*.required' => 'Field Harus Di Isi'
+        ])->validate();
+
+        //upload image
+        $image = $request->file('gambar');
+        $image->storeAs('public/gambar', $image->hashName());
 
         $tanggalPengajuan = Carbon::now()->isoFormat('dddd, D MMMM Y');
         
@@ -36,6 +56,7 @@ class PengajuanController extends Controller
         $data->penjelasan = $request->penjelasan;
         $data->seksi_id = $request->seksi_id;
         $data->departemen_id = $request->departemen_id;
+        $data->gambar = $image->hashName();
         $data->tanggal_pengajuan = $tanggalPengajuan;
         $data->save();
 
@@ -58,22 +79,50 @@ class PengajuanController extends Controller
     }
 
     public function update(Request $request, $id){
+         
+        $this->validate($request, [
+            'gambar'     => 'mimes:pdf',
+        ]);
 
         $data = Pengajuan::findOrFail($id);
-        $data->kategori_id = $request->kategori_id;
-        $data->seksi_id = $request->seksi_id;
-        $data->nama_aplikasi = $request->nama_aplikasi;
-        $data->penjelasan = $request->penjelasan;
-        $data->save();
 
+        if ($request->hasFile('gambar')) {
+
+            //upload new image
+            $image = $request->file('gambar');
+            $image->storeAs('public/gambar', $image->hashName());
+
+            //delete old image
+            Storage::delete('public/gambar/'.$post->gambar);
+
+            //update post with new image
+
+            $data->kategori_id = $request->kategori_id;
+            $data->seksi_id = $request->seksi_id;
+            $data->nama_aplikasi = $request->nama_aplikasi;
+            $data->penjelasan = $request->penjelasan;
+            $data->gambar = $image->hashName();
+            $data->save();
+
+            if($data){
+                return redirect()->route('pengajuan.index');
+            }
+        }else{
+            $data->kategori_id = $request->kategori_id;
+            $data->seksi_id = $request->seksi_id;
+            $data->nama_aplikasi = $request->nama_aplikasi;
+            $data->penjelasan = $request->penjelasan;
+            $data->save();
+        }
         if($data){
             return redirect()->route('pengajuan.index');
         }
-        
     }
 
     public function delete($id){
         $data = Pengajuan::findOrFail($id);
+        //delete image
+        Storage::delete('public/gambar/'. $data->gambar);
         $data->delete();
 
         return redirect()->route('pengajuan.index');

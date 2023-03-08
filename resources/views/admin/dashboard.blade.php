@@ -37,56 +37,72 @@
           </div>
         </div>
       </div>
+      @if (Auth::user()->role == 'user')
       <div class="col-md-4 stretch-card grid-margin">
         <div class="card bg-gradient-dark card-img-holder text-white">
-            <div class="card-body">
-              <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Pengajuan Pending
-              </h4>
-              <h2 class="mb-5">{{$pengajuanPending}}</h2>
-            </div>
+            <a href="{{route('pengajuan.index')}}" style="text-decoration:none; color:#fff">
+              <div class="card-body">
+                <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">Pengajuan Pending
+                </h4>
+                <h2 class="mb-5">{{$pengajuanPending}}</h2>
+              </div>
+            </a>
         </div>
       </div>
+      @endif
       <div class="col-md-4 stretch-card grid-margin">
         <div class="card bg-gradient-warning card-img-holder text-white">
-            <div class="card-body">
-              <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Pengajuan Diproses
-              </h4>
-              <h2 class="mb-5">{{$pengajuanDiproses}}</h2>
-            </div>
+            <a href="{{route('pengajuan.proses')}}" style="text-decoration:none; color:#fff">
+              <div class="card-body">
+                <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">Pengajuan Diproses
+                </h4>
+                <h2 class="mb-5">{{$pengajuanDiproses}}</h2>
+              </div>
+            </a>
         </div>
       </div>
+      @if (Auth::user()->role == 'user' || 'sit')
       <div class="col-md-4 stretch-card grid-margin">
         <div class="card bg-gradient-success card-img-holder text-white">
-            <div class="card-body">
-              <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Pengajuan Diterima
-              </h4>
-              <h2 class="mb-5">{{($pengajuanDiterima)}}</h2>
-            </div>
+            <a href="{{route('pengajuan.diterima')}}" style="text-decoration:none; color:#fff">
+              <div class="card-body">
+                <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">Pengajuan Diterima
+                </h4>
+                <h2 class="mb-5">{{($pengajuanDiterima)}}</h2>
+              </div>
+            </a>
         </div>
       </div>
+      @endif
       <div class="col-md-4 stretch-card grid-margin">
         <div class="card bg-gradient-info card-img-holder text-white">
-            <div class="card-body">
-              <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Pengajuan Selesai
-              </h4>
-              <h2 class="mb-5">{{($pengajuanSelesai)}}</h2>
-            </div>
+            <a href="{{route('pengajuan.selesai')}}" style="text-decoration:none; color:#fff">
+              <div class="card-body">
+                <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">Pengajuan Selesai
+                </h4>
+                <h2 class="mb-5">{{($pengajuanSelesai)}}</h2>
+              </div>
+            </a>
         </div>
       </div>
+      @if (Auth::user()->role == 'user')
       <div class="col-md-4 stretch-card grid-margin">
         <div class="card bg-gradient-danger card-img-holder text-white">
-          <div class="card-body">
-            <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-            <h4 class="font-weight-normal mb-3">Pengajuan Ditolak
-            </h4>
-            <h2 class="mb-5">{{($pengajuanDitolak)}}</h2>
-          </div>
+          <a href="{{route('pengajuan.ditolak')}}" style="text-decoration:none; color:#fff">
+            <div class="card-body">
+              <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+              <h4 class="font-weight-normal mb-3">Pengajuan Ditolak
+              </h4>
+              <h2 class="mb-5">{{($pengajuanDitolak)}}</h2>
+            </div>
+          </a>
         </div>
       </div>
+      @endif
     </div>
   </div>
 </div>
