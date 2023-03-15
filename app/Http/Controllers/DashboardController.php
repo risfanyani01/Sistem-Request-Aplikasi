@@ -17,4 +17,11 @@ class DashboardController extends Controller
         $pengajuanDitolak = Pengajuan::where('keterangan', 'ditolak')->count();
         return view('admin.dashboard', compact('dataPengajuan','pengajuanDiterima','pengajuanPending','pengajuanDitolak','pengajuanDiproses', 'pengajuanSelesai'));
     }
+
+    public function notification(){
+        $pengajuanDiterima = Pengajuan::where('keterangan', 'diterima')->count();
+        $pengajuanPending = Pengajuan::where('keterangan', 'pending')->count();
+        return view('admin.partials.sidebar', compact('pengajuanDiterima','pengajuanPending'));
+    }
+ 
 }

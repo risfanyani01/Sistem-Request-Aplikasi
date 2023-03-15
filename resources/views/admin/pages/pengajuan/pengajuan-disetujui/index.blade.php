@@ -6,7 +6,7 @@
       <div class="page-header">
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
-              <i class="mdi mdi-check"></i>
+              <i class="mdi mdi-clipboard"></i>
             </span> Data Pengajuan Disetujui Manager
           </h3>
       </div>
@@ -53,7 +53,7 @@
                                                 <td class="text-wrap">{{$item->kategori->nama_jenis}}</td>
                                                 <td class="text-center">{{$item->seksi->nama_seksi}}</td>
                                                 @if ($item->keterangan == 'diterima')
-                                                    <td class="text-center"><span class="bg-success rounded-5 px-2 py-1 text-light"><strong>{{$item->keterangan}}</strong></span></td>
+                                                    <td class="text-center"><span class="bg-success rounded-5 px-2 py-1 text-light fw-bold">{{$item->keterangan}}</span></td>
                                                 @endif   
                                                 <td class="text-center">
                                                 @if (Auth::user()->role == 'sit')

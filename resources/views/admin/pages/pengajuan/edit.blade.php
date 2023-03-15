@@ -52,7 +52,7 @@
           <div class="col-12">
             <label for="kategori_id" class="form-label">Jenis Permintaan</label>
             <select class="form-select form-control @error('kategori_id') is-invalid @enderror" name="kategori_id">
-                <option value="{{$data->kategori_id}}">{{$data->kategori->nama_jenis}}</option>
+                <option selected value="{{$data->kategori_id}}">{{$data->kategori->nama_jenis}}</option>
                 @foreach ($kategori as $item)
                   <option value="{{ $item->id }}">{{ $item->nama_jenis }}</option>
                 @endforeach
@@ -82,8 +82,8 @@
           </div>
 
           <div class="col-12">
-            <label for="gambar" class="form-label"><strong>Gambar / Blueprint</strong></label>
-            <input type="file" class="form-control" name="gambar">
+            <label for="gambar" class="form-label"><strong>Blueprint</strong></label>
+            <input type="file" class="form-control" name="gambar" value="{{$data->gambar}}">
             
             @error('gambar')
               <div class="alert alert-danger">{{ $message }}</div>

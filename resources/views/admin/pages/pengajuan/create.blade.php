@@ -81,13 +81,12 @@
 
           <div class="col-12">
             <label for="gambar" class="form-label"><strong>Blueprint</strong></label>
-            <input type="file" class="form-control" name="gambar">
+            <input type="file" class="form-control" name="gambar" accept=".pdf">
             
             @error('gambar')
               <div class="alert alert-danger">{{ $message }}</div>
             @enderror
-          </div>         
-          
+          </div>
           <div class="text-left">
             <button type="submit" class="btn btn-md btn-primary">Submit</button>
             <a href="{{route('pengajuan.index')}}" class="btn btn-md btn-secondary">Cancel</a>

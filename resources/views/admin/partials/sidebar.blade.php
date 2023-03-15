@@ -29,7 +29,14 @@
         <i class="mdi mdi-bookmark menu-icon"></i>
       </a>
     </li>
-
+    
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('departemen.index')}}">
+        <span class="menu-title">Departemen</span>
+        <i class="mdi mdi-account-group-outline menu-icon"></i>
+      </a>
+    </li>
+    
     <li class="nav-item">
       <a class="nav-link" href="{{route('seksi.index')}}">
         <span class="menu-title">Seksi</span>
@@ -37,12 +44,6 @@
       </a>
     </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{route('departemen.index')}}">
-        <span class="menu-title">Departemen</span>
-        <i class="mdi mdi-account-group-outline menu-icon"></i>
-      </a>
-    </li>
 
     <li class="nav-item">
       <a class="nav-link" href="{{route('pengajuan.diterima')}}">

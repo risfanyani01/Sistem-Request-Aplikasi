@@ -15,11 +15,11 @@
                     <div class="col-md-12">
                         <div class="card border-0 shadow rounded">
                             <div class="card-body">
-                                <div class="mb-4">
-                                    @if (Auth::user()->role == 'sit')
+                                @if (Auth::user()->role == 'sit')
+                                    <div class="mb-4">
                                         <a href="{{route('kategori.create')}}" class="btn btn-md btn-primary rounded-1">Tambah Data</a>
-                                    @endif
-                                </div>
+                                    </div>
+                                @endif
                                 <table class="table table-responsive table-bordered table-striped" style="font-size: 14px">
                                 <thead>
                                     <tr>

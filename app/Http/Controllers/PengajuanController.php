@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Seksi;
 use App\Models\Kategori;
+use App\Models\Timeline;
 use App\Models\Pengajuan;
 use App\Models\Departemen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -66,8 +68,12 @@ class PengajuanController extends Controller
     }
 
     public function show($id){
-        $data = Pengajuan::findOrFail($id);        
-        return view('admin.pages.pengajuan.detail', compact('data'));
+        $data = Pengajuan::findOrFail($id);
+        // $timeline = Timeline::where('pengajuan_id', $id);
+        $timeline = Timeline::select('timelines.*','pengajuan_id')
+                    ->join('pengajuans','pengajuans.id','=','timelines.pengajuan_id')->get();
+        $dataTimeline = $timeline->where('pengajuan_id', $id);
+        return view('admin.pages.pengajuan.detail', compact('data', 'dataTimeline'));
     }
 
     public function edit($id){
@@ -79,44 +85,42 @@ class PengajuanController extends Controller
     }
 
     public function update(Request $request, $id){
-         
-        $this->validate($request, [
-            'gambar'     => 'mimes:pdf',
-        ]);
 
         $data = Pengajuan::findOrFail($id);
 
         if ($request->hasFile('gambar')) {
-
-            //upload new image
+            
+            // upload new image
             $image = $request->file('gambar');
             $image->storeAs('public/gambar', $image->hashName());
-
-            //delete old image
-            Storage::delete('public/gambar/'.$post->gambar);
+            
+            // delete old image
+            Storage::delete('public/gambar/'.$data->gambar);
 
             //update post with new image
+            $data->update([ 
+            'kategori_id' => $request->kategori_id,
+            'seksi_id' => $request->seksi_id,
+            'nama_aplikasi' => $request->nama_aplikasi,
+            'penjelasan' => $request->penjelasan,
+            'gambar' => $gambar
+            ]);
 
-            $data->kategori_id = $request->kategori_id;
-            $data->seksi_id = $request->seksi_id;
-            $data->nama_aplikasi = $request->nama_aplikasi;
-            $data->penjelasan = $request->penjelasan;
-            $data->gambar = $image->hashName();
-            $data->save();
+            dd($data);
 
-            if($data){
-                return redirect()->route('pengajuan.index');
-            }
-        }else{
-            $data->kategori_id = $request->kategori_id;
-            $data->seksi_id = $request->seksi_id;
-            $data->nama_aplikasi = $request->nama_aplikasi;
-            $data->penjelasan = $request->penjelasan;
-            $data->save();
-        }
-        if($data){
-            return redirect()->route('pengajuan.index');
-        }
+             if($data){
+                 return redirect()->route('pengajuan.index');
+             }
+        } else{
+             $data->kategori_id = $request->kategori_id;
+             $data->seksi_id = $request->seksi_id;
+             $data->nama_aplikasi = $request->nama_aplikasi;
+             $data->penjelasan = $request->penjelasan;
+             $data->save();
+         }
+         if($data){
+             return redirect()->route('pengajuan.index');
+         }
     }
 
     public function delete($id){
@@ -209,7 +213,7 @@ class PengajuanController extends Controller
             \Session::flash('gagal'.$e->getMessage());
         }
 
-        return redirect()->route('pengajuan.diterima');
+        return redirect()->route('pengajuan.selesai');
     }
        
 }

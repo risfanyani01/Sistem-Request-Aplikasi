@@ -9,6 +9,7 @@ use App\Http\Controllers\AktivitasController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\DepartemenController;
+use App\Http\Controllers\TimelineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,11 +55,19 @@ Route::get('/pengajuan-ditolak', [PengajuanController::class, 'pengajuan_ditolak
 Route::get('/pengajuan-selesai', [PengajuanController::class, 'pengajuan_selesai'])->name('pengajuan.selesai');
 Route::get('/pengajuan-proses', [PengajuanController::class, 'pengajuan_proses'])->name('pengajuan.proses');
 
-// Approve
+// Approve Pengajuan
 Route::get('aprove/{id}', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
-Route::get('proses/{id}', [PengajuanController::class, 'proses'])->name('pengajuan.diproses');
+Route::get('process/{id}', [PengajuanController::class, 'proses'])->name('pengajuan.diproses');
 Route::get('cancel/{id}', [PengajuanController::class, 'cancel'])->name('pengajuan.cancel');
-Route::get('done/{id}', [PengajuanController::class, 'done'])->name('pengajuan.done');
+Route::get('success/{id}', [PengajuanController::class, 'done'])->name('pengajuan.success');
+
+//Timeline Pengajuan
+Route::post('/timeline/tambah/{id}', [TimelineController::class, 'addTimeline'])->name('timeline.create');
+Route::delete('/timeline/delete/{id}', [TimelineController::class, 'deleteTimeline'])->name('timeline.delete');
+
+// Approve Timeline
+Route::get('proses/{id}', [TimelineController::class, 'prosesTimeline'])->name('timeline.proses');
+Route::get('done/{id}', [TimelineController::class, 'doneTimeline'])->name('timeline.selesai');
 
 // Logout
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');

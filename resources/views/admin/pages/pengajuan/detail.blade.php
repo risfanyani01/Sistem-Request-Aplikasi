@@ -68,55 +68,118 @@
                             Lihat Data
                           </a>
                         </div>
-                    </div>
-                </div>
 
+                    </div>
+                </div>
+              
                 
-                {{-- Proses Pengerjaan
-                <div class="tab-pane fade show active profile-overview" id="proses-pengerjaan">
-                  
-                  @if($data->keterangan == 'proses' || $data->keterangan == 'selesai')
-                  <div class="ps-4">
-                    <hr>
-                    <h4 class="text-center text-uppercase">Proses Pengerjaan oleh TIM <span class="text-primary font-weigh-bold">Developer</span></h4>
-                    <hr>
-                  </div>
-                  
-                 <div class="col-12 grid-margin">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th> <strong> Aktivitas </strong></th>
-                              <th> <strong> Status </strong></th>
-                              <th> <strong> Tanggal Selesai </strong></th>
-                              <th> <strong> Aksi </strong></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td> Fund is not recieved </td>
+              @if ($data->keterangan == 'proses')
+                <div class="d-flex justify-content-between mt-4">
+                  <h4 class="ps-4 text-uppercase align-self-center fw-bold">Proses Pengerjaan oleh TIM <span class="text-primary">Developer</span></h4>
+                  @if (Auth::user()->role == 'sit')
+                  <button type="button" class="btn btn-primary text-uppercase" data-bs-toggle="modal" data-bs-target="#modal-add"><i class="mdi mdi-plus"></i>Tambah Timeline</button>
+                  @endif                  
+                </div>
+              @elseif($data->keterangan == 'selesai')
+              <div class="d-flex justify-content-between mt-4">
+                <h4 class="ps-4 text-uppercase align-self-center fw-bold">Proses Pengerjaan oleh TIM <span class="text-primary">Developer</span></h4>
+              </div>
+              @endif
+                
+              @if (!$dataTimeline->isEmpty())
+               <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="fw-bold"> Proses </th>
+                            <th class="fw-bold"> Perkiraan Selesai </th>
+                            <th class="fw-bold"> Status </th>
+                            <th class="fw-bold"> Tanggal Selesai </th>
+                            @if (Auth::user()->role == 'sit')
+                              <th class="fw-bold"> Aksi </th>
+                            @endif
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($dataTimeline as $item)
+                          <tr>
+                              <td> {{$item->nama_proses}} </td>
+                              <td> {{$item->target_selesai}} </td>
                               <td>
-                                <label class="badge badge-gradient-success">DONE</label>
+                                @if ($item->status == 'pending')
+                                  <label class="badge badge-gradient-warning">{{$item->status}}</label>
+                                @elseif ($item->status == 'proses')
+                                  <label class="badge badge-gradient-info">{{$item->status}}</label>
+                                @else
+                                  <label class="badge badge-gradient-success">{{$item->status}}</label>
+                                @endif
                               </td>
-                              <td> Dec 5, 2017 </td>
-                              <td>Selesai</td>
+                              <td> {{$item->tanggal_selesai}} </td>
+                              @if (Auth::user()->role == 'sit')
+                                <td>
+                                  <form action="{{route('timeline.delete', $item->id)}}" method="post">
+                                    @if ($item->status == 'pending')
+                                    <a href="{{route('timeline.proses', $item->id)}}" class="btn btn-sm btn-warning"><i class="mdi mdi-check"></i></a>
+                                    @elseif ($item->status == 'proses')
+                                      <a href="{{route('timeline.selesai', $item->id)}}" class="btn btn-sm btn-success"><i class="mdi mdi-check"></i></a>
+                                    @endif
+
+                                    @method('delete')
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin menghapus')"><i class="mdi mdi-delete"></i></button>
+                                  </form>
+                                </td>
+                                @endif
                             </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                            @endforeach
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
-                @else
-                <div>
-                  <h4></h4>
+                @endif
+
+                @if (!$dataTimeline->isEmpty())
+                  @if ($data->keterangan == 'proses')
+                  <div class="mt-4 d-flex justify-content-end ms-4">
+                    <a href="{{route('pengajuan.success', $data->id)}}" class="btn btn-success"><i class="mdi mdi-check"></i>Aplikasi Selesai</a>
+                  </div>
+                  @endif
+                @endif
+
+              {{-- Modal Tambah Timeline --}}
+              <div class="modal inmodal fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-xs">
+                <form name="frm_add" id="frm_add" action="{{route('timeline.create', $data->id)}}" class="form-horizontal" method="POST">
+                @csrf
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Tambah Data</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <div><input type="text" name="pengajuan_id" placeholder="pengajuan id" class="form-control" value="{{$data->id}}" hidden></div>
+  
+                      <div class="form-group"><label class="ps-1">Nama Proses</label>
+                      <div><input type="text" name="nama_proses" placeholder="nama proses" class="form-control"></div>
+
+                      <div class="form-group"><label class="mt-2 ps-1">Target Selesai</label>
+                      <div><input type="date" name="target_selesai" class="form-control"></div>
+
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                  </div>
+                </form>
                 </div>
-              </div>
-              @endif --}}
-               
+                </div>
+                  
               </div>
             </div>
           </div>
